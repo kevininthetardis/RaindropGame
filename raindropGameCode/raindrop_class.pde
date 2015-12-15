@@ -4,7 +4,7 @@ class Raindrop {
 
   Raindrop(float locx, float locy) {
     loc = new PVector(locx, locy);
-    vel = new PVector(0, 1);
+    vel = new PVector(0, 2);
     grav = 0.098;
     diam = 20;
   }
