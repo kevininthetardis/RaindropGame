@@ -1,8 +1,9 @@
 int c = 900;
 PVector mouse;   //declare a P
-Raindrop r;      //declare a new Raindrop called r
-Raindrop r2;
-Raindrop[] muchrain = new Raindrop[c];
+Missile r;      //declare a new Raindrop called r
+Missile r2;
+Missile[] muchrain = new Missile[c];
+Shield b;
 // On your own, create an array of Raindrop objects instead of just one
 // Use the array instead of the single object
 // You can start out by just using the single Raindrop as you test
@@ -10,21 +11,22 @@ Raindrop[] muchrain = new Raindrop[c];
 
 void setup() {
   size(1200, 800);
+  b = new Shield(mouseX, 600);
   mouse = new PVector();                //initialize mouse PVector. value is irrelevant since it will be set at the start of void draw(){}
-  r = new Raindrop(random(width), 0); //Initialize r. The parameters used are the initial x and y positions
-  r2 = new Raindrop(random(width), 0);
+  r = new Missile(random(width), 0); //Initialize r. The parameters used are the initial x and y positions
+  r2 = new Missile(random(width), 0);
   for(int i = 0; i < c; i++){
-    muchrain[i] = new Raindrop(random(width), 0);
+    muchrain[i] = new Missile(random(width), 0);
   }
 }
 
 void draw() {
   mouse.set(mouseX, mouseY);             //set value of mouse as mouseX,mouseY
   background(50, 50, 60);
-  r.fall();         //make the raindrop fall. It should accelerate as if pulled towards the ground by earth's gravity
-  r2.fall();
+  r.fire();         //make the raindrop fall. It should accelerate as if pulled towards the ground by earth's gravity
+  r2.fire();
   for(int i = 0; i < c; i++){
-    muchrain[i].fall();
+    muchrain[i].fire();
     muchrain[i].display();
     if(muchrain[i].isInContactWith(mouse)) {
       muchrain[i].reset();
@@ -47,4 +49,5 @@ void draw() {
   if (r2.loc.y > height + r2.diam/2) {
     r2.reset();
   }
+  b.show();
 }

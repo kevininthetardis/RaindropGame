@@ -1,7 +1,18 @@
-class Bucket{
+class Shield{
   PVector loc;
-  float notdiam;
+  float notdiam, locx, locy;
   
-  Bucket(){
-    loc = new PVector(mouseX, mouseY);
+  Shield(float locx, float locy){
+    loc = new PVector(locx, locy);
     notdiam = 50;
+  }
+  
+  void show(){
+    fill(225,50,10);
+    loc.set(mouseX, 600);
+    noFill();
+    stroke(200,200,255);
+    strokeWeight(5);
+    arc(loc.x,loc.y,500,100, PI+QUARTER_PI, TWO_PI-QUARTER_PI);
+  }
+}

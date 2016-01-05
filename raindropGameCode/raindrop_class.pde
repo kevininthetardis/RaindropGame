@@ -1,30 +1,29 @@
-class Raindrop {
+class Missile {
   PVector loc, vel;
-  float grav, diam, locx, locy;
+  float diam, locx, locy;
 
-  Raindrop(float locx, float locy) {
+  Missile(float locx, float locy) {
     loc = new PVector(locx, locy);
-    vel = new PVector(0, random(1, 3));
-    grav = 0.098;
-    diam = 20;
+    vel = new PVector((random(1,3)), random(6, 8));
+    diam = 10;
   }
 
   void display() {
     noStroke();
     fill(230, 230, 255, 100);
-    ellipse(loc.x, loc.y, diam, diam);
+    ellipse(loc.x, loc.y, 10, 50);
     triangle(loc.x-diam/2, loc.y, loc.x, loc.y-diam, loc.x+diam/2, loc.y);
   }
 
-  void fall() {
+  void fire() {
     loc.add(vel);
-    vel.y += grav;
   }
 
   void reset() {
     loc.x = random(width);
     loc.y = 0;
-    vel.y = random(1, 3);
+    vel.y = random(5, 7);
+    vel.x = (random(-0.5,0.5));
   }
 
   boolean isInContactWith(PVector var) {
