@@ -1,10 +1,11 @@
 int c = 20;
-int pop = 30;
+int pop = 40;
+int b = 0;
 PVector mouse;   //declare a P
-Missile r;      //declare a new Raindrop called r
-Missile r2;
+Missile m;      //declare a new Raindrop called r
+Missile m2;
 Missile[] muchrain = new Missile[c];
-Shield b;
+Shield s;
 Building[] city = new Building[pop];
 // On your own, create an array of Raindrop objects instead of just one
 // Use the array instead of the single object
@@ -13,51 +14,63 @@ Building[] city = new Building[pop];
 
 void setup() {
   size(1200, 800);
-  b = new Shield(mouseX, 600);
+  s = new Shield(mouseX, 600);
   mouse = new PVector();                //initialize mouse PVector. value is irrelevant since it will be set at the start of void draw(){}
-  r = new Missile(random(width), 0); //Initialize r. The parameters used are the initial x and y positions
-  r2 = new Missile(random(width), 0);
+  m = new Missile(random(width), 0); //Initialize r. The parameters used are the initial x and y positions
+  m2 = new Missile(random(width), 0);
   for (int i = 0; i < c; i++) {
     muchrain[i] = new Missile(random(width), 0);
   }
-  for(int i = 0; i < pop; i++){
-    city[i] = new Building(random(10,50), random(5,15), random(width));
+  for (int i = 0; i < pop; i++) {
+    city[i] = new Building();
   }
 }
 
 void draw() {
   background(50, 50, 60);
   mouse.set(mouseX, mouseY);             //set value of mouse as mouseX,mouseY
-  r.fire();         //make the raindrop fall. It should accelerate as if pulled towards the ground by earth's gravity
-  r2.fire();
+  m.fire();         //make the raindrop fall. It should accelerate as if pulled towards the ground by earth's gravity
+  m2.fire();
+  for (int i = 0; i < pop; i++) {
+    city[i].build();
+  }
   for (int i = 0; i < c; i++) {
     muchrain[i].fire();
     muchrain[i].display();
-    if (muchrain[i].isInContactWith(mouse)) {
+    if(muchrain[i].loc.y <=0){
+      muchrain[i].reset();
+    if (muchrain[i].loc.x >= mouseX-250 && muchrain[i].loc.x <= mouseX+250 && muchrain[i].loc.y >=550 && muchrain[i].loc.y >=600) {
       muchrain[i].deflected();
     }
     if (muchrain[i].loc.y > height + muchrain[i].diam/2) {
-      muchrain[i].boom();
+      muchrain[i].reset();
     }
-    for(int j = 0; j < pop; j++){
-      city[j].build();
-      if(muchrain[i].loc.y >= city[j].h && muchrain[i].loc.x >= city[j].x && muchrain[i].loc.x <= (city[j].x+city[j].w)){
+    for (int j = 0; j < pop; j++) {
+      if (muchrain[i].loc.y >= height-city[j].h && muchrain[i].loc.x >= city[j].x && muchrain[i].loc.x <= (city[j].x+city[j].w)) {
         city[j].destroyed();
+        b += 1;
       }
+    }
+    m.display();      //display the raindrop
+    m2.display();
+    if (m.isInContactWith(mouse)) {      //check to see if the raindrop is in contact with the point represented by the PVector called mouse
+      m.deflected();                         //if it is, reset the raindrop
+    }
+    if (m2.isInContactWith(mouse)) {
+      m2.deflected();
+    }
+    if (m.loc.y > height + m.diam/2) {     //check to see if the raindrop goes below the bottom of the screen
+      m.boom();                           //if it does, reset the raindrop
+    }
+    if (m2.loc.y > height + m2.diam/2) {
+      m2.boom();
+    }
+    s.show();
   }
-  r.display();      //display the raindrop
-  r2.display();
-  if (r.isInContactWith(mouse)) {      //check to see if the raindrop is in contact with the point represented by the PVector called mouse
-    r.deflected();                         //if it is, reset the raindrop
+  if(b >= pop){
+    background(0);
+    fill(255,0,0);
+    textSize(100);
+    text("game over they ded", 0, height/2);
   }
-  if (r2.isInContactWith(mouse)) {
-    r2.deflected();
-  }
-  if (r.loc.y > height + r.diam/2) {     //check to see if the raindrop goes below the bottom of the screen
-    r.boom();                           //if it does, reset the raindrop
-  }
-  if (r2.loc.y > height + r2.diam/2) {
-    r2.boom();
-  }
-  b.show();
 }

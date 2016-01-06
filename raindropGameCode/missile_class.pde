@@ -37,6 +37,12 @@ class Missile {
     g = 0;
     b = 0;
   }
+  void reset() {
+    loc.x= 0;
+    loc.y = 0;
+    vel.x = random(-3,3);
+    vel.y = random(6,8);
+  }
 
   boolean isInContactWith(PVector var) {
     if (loc.dist(var) < diam/2) {

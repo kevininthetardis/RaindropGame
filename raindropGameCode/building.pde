@@ -1,21 +1,21 @@
-class Building{
+class Building {
   float h, w, x, transp;
-  
-  Building(float h, float w, float x){
-    h = random(10, 50);
-    w = random(5, 15);
+
+  Building() {
+    h = random(20, 60);
+    w = random(10, 20);
     x = random(width);
-    transp = 0;
+    transp = 255;
   }
-  
-  void build(){
-    fill(100,200,100, transp);
+
+  void build() {
+    noStroke();
+    fill(100, 200, 100, transp);
     rectMode(CORNERS);
     rect(x, height, x+w, height-h);
   }
-  
-  void destroyed(){
-    transp=255;
+
+  void destroyed() {
+    transp=0;
   }
 }
-  
