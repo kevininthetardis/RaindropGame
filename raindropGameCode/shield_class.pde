@@ -15,4 +15,6 @@ class Shield{
     strokeWeight(5);
     arc(loc.x,loc.y,500,100, PI+QUARTER_PI, TWO_PI-QUARTER_PI);
   }
+
+}
 }
