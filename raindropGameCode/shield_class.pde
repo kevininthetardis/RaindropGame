@@ -8,12 +8,10 @@ class Shield {
   }
 
   void show() {
-    fill(225, 50, 10);
+    fill(0);
     loc.set(mouseX, 600);
-    noFill();
     stroke(200, 200, 255);
     strokeWeight(5);
     arc(loc.x, loc.y, 500, 100, PI, TWO_PI);
   }
-}
 }

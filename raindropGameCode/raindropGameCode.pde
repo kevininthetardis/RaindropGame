@@ -37,40 +37,41 @@ void draw() {
   for (int i = 0; i < c; i++) {
     muchrain[i].fire();
     muchrain[i].display();
-    if(muchrain[i].loc.y <=0){
+    if (muchrain[i].loc.y <=0) {
       muchrain[i].reset();
-    if (muchrain[i].loc.x >= mouseX-250 && muchrain[i].loc.x <= mouseX+250 && muchrain[i].loc.y >=550 && muchrain[i].loc.y >=600) {
-      muchrain[i].deflected();
-    }
-    if (muchrain[i].loc.y > height + muchrain[i].diam/2) {
-      muchrain[i].reset();
-    }
-    for (int j = 0; j < pop; j++) {
-      if (muchrain[i].loc.y >= height-city[j].h && muchrain[i].loc.x >= city[j].x && muchrain[i].loc.x <= (city[j].x+city[j].w)) {
-        city[j].destroyed();
-        b += 1;
+      if (muchrain[i].loc.x >= mouseX-250 && muchrain[i].loc.x <= mouseX+250 && muchrain[i].loc.y >=550 && muchrain[i].loc.y >=600) {
+        muchrain[i].deflected();
       }
+      if (muchrain[i].loc.y > height + muchrain[i].diam/2) {
+        muchrain[i].reset();
+      }
+      for (int j = 0; j < pop; j++) {
+        if (muchrain[i].loc.y >= height-city[j].h && muchrain[i].loc.x >= city[j].x && muchrain[i].loc.x <= (city[j].x+city[j].w)) {
+          city[j].destroyed();
+          b += 1;
+        }
+      }
+      m.display();      //display the raindrop
+      m2.display();
+      if (m.isInContactWith(mouse)) {      //check to see if the raindrop is in contact with the point represented by the PVector called mouse
+        m.deflected();                         //if it is, reset the raindrop
+      }
+      if (m2.isInContactWith(mouse)) {
+        m2.deflected();
+      }
+      if (m.loc.y > height + m.diam/2) {     //check to see if the raindrop goes below the bottom of the screen
+        m.boom();                           //if it does, reset the raindrop
+      }
+      if (m2.loc.y > height + m2.diam/2) {
+        m2.boom();
+      }
+      s.show();
     }
-    m.display();      //display the raindrop
-    m2.display();
-    if (m.isInContactWith(mouse)) {      //check to see if the raindrop is in contact with the point represented by the PVector called mouse
-      m.deflected();                         //if it is, reset the raindrop
+    if (b >= pop) {
+      background(0);
+      fill(255, 0, 0);
+      textSize(100);
+      text("game over they ded", 0, height/2);
     }
-    if (m2.isInContactWith(mouse)) {
-      m2.deflected();
-    }
-    if (m.loc.y > height + m.diam/2) {     //check to see if the raindrop goes below the bottom of the screen
-      m.boom();                           //if it does, reset the raindrop
-    }
-    if (m2.loc.y > height + m2.diam/2) {
-      m2.boom();
-    }
-    s.show();
-  }
-  if(b >= pop){
-    background(0);
-    fill(255,0,0);
-    textSize(100);
-    text("game over they ded", 0, height/2);
   }
 }
