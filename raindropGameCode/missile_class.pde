@@ -23,7 +23,6 @@ class Missile {
 
   void deflected() {
     vel.y = -vel.y;
-    rotate(PI);
     display();
   }
   void boom() {
@@ -38,7 +37,7 @@ class Missile {
     b = 0;
   }
   void reset() {
-    loc.x= 0;
+    loc.x= random(width);
     loc.y = 0;
     vel.x = random(-3, 3);
     vel.y = random(6, 8);
