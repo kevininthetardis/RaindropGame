@@ -2,7 +2,7 @@ class Building {
   float h, w, x, transp;
 
   Building() {
-    h = random(20, 60);
+    h = random(40, 120);
     w = random(10, 20);
     x = random(width);
     transp = 255;
